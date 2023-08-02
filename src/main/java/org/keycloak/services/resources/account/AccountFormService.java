@@ -101,6 +101,7 @@ import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.managers.AuthenticationSessionManager;
 import org.keycloak.services.managers.UserConsentManager;
 import org.keycloak.services.messages.Messages;
+import org.keycloak.services.resource.RealmResourceProvider;
 import org.keycloak.services.resources.AbstractSecuredLocalService;
 import org.keycloak.services.resources.RealmsResource;
 import org.keycloak.services.util.DefaultClientSessionContext;
@@ -119,7 +120,16 @@ import org.keycloak.utils.CredentialHelper;
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
-public class AccountFormService extends AbstractSecuredLocalService {
+public class AccountFormService extends AbstractSecuredLocalService
+    implements RealmResourceProvider {
+
+  @Override
+  public Object getResource() {
+    return this;
+  }
+
+  @Override
+  public void close() {}
 
   private static final Logger logger = Logger.getLogger(AccountFormService.class);
 
@@ -504,7 +514,7 @@ public class AccountFormService extends AbstractSecuredLocalService {
         .collect(
             Collectors
                 .toList()) // collect to avoid concurrent modification as backchannelLogout removes
-                           // the user sessions.
+        // the user sessions.
         .forEach(
             userSession ->
                 AuthenticationManager.backchannelLogout(
@@ -757,7 +767,7 @@ public class AccountFormService extends AbstractSecuredLocalService {
         .collect(
             Collectors
                 .toList()) // collect to avoid concurrent modification as backchannelLogout removes
-                           // the user sessions.
+        // the user sessions.
         .forEach(
             s ->
                 AuthenticationManager.backchannelLogout(

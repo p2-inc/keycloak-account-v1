@@ -17,6 +17,7 @@
 
 package org.keycloak.forms.account;
 
+import com.google.auto.service.AutoService;
 import org.keycloak.provider.Provider;
 import org.keycloak.provider.ProviderFactory;
 import org.keycloak.provider.Spi;
@@ -24,6 +25,7 @@ import org.keycloak.provider.Spi;
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
+@AutoService(Spi.class)
 public class AccountSpi implements Spi {
 
   @Override

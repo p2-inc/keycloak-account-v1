@@ -17,6 +17,7 @@
 
 package org.keycloak.forms.account.freemarker;
 
+import com.google.auto.service.AutoService;
 import org.keycloak.Config;
 import org.keycloak.forms.account.AccountProvider;
 import org.keycloak.forms.account.AccountProviderFactory;
@@ -26,6 +27,7 @@ import org.keycloak.models.KeycloakSessionFactory;
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
+@AutoService(AccountProviderFactory.class)
 public class FreeMarkerAccountProviderFactory implements AccountProviderFactory {
 
   @Override

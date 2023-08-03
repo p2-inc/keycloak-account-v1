@@ -14,6 +14,8 @@ Create realm `test`
 
 Create a user
 
+Set the account theme to `account-v1`
+
 Update `account` and `account-console` clients:
 
 1. Remove *Home URL*. Add a *Valid redirect URI*:

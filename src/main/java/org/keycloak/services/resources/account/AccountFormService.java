@@ -47,6 +47,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.extern.jbosslog.JBossLog;
 import org.jboss.logging.Logger;
 import org.keycloak.authorization.AuthorizationProvider;
 import org.keycloak.authorization.model.PermissionTicket;
@@ -120,6 +121,7 @@ import org.keycloak.utils.CredentialHelper;
 /**
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
+@JBossLog
 public class AccountFormService extends AbstractSecuredLocalService
     implements RealmResourceProvider {
 
@@ -157,9 +159,11 @@ public class AccountFormService extends AbstractSecuredLocalService
     super(session, client);
     this.event = event;
     this.authManager = new AppAuthManager();
+    init();
   }
 
   public void init() {
+    log.info("init");
     session.getContext().setClient(client);
     eventStore = session.getProvider(EventStoreProvider.class);
 
@@ -326,6 +330,7 @@ public class AccountFormService extends AbstractSecuredLocalService
   @GET
   @Produces(MediaType.TEXT_HTML)
   public Response accountPage() {
+    log.info("accountPage");
     return forwardToPage(null, AccountPages.ACCOUNT);
   }
 
@@ -1231,9 +1236,12 @@ public class AccountFormService extends AbstractSecuredLocalService
 
   @Override
   protected URI getBaseRedirectUri() {
-    return AccountUrls.accountBase(session.getContext().getUri().getBaseUri())
-        .path("/")
-        .build(realm.getName());
+    URI u =
+        AccountUrls.accountBaseBuilder(session.getContext().getUri().getBaseUri())
+            .path("/")
+            .build(realm.getName());
+    log.debugf("getBaseRedirectUri %s", u);
+    return u;
   }
 
   public static boolean isPasswordSet(KeycloakSession session, RealmModel realm, UserModel user) {

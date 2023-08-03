@@ -16,6 +16,7 @@ import org.keycloak.provider.ProviderEvent;
 import org.keycloak.services.resource.RealmResourceProvider;
 import org.keycloak.services.resource.RealmResourceProviderFactory;
 import jakarta.ws.rs.NotFoundException;
+import org.keycloak.models.Constants;
 
 @JBossLog
 @AutoService(RealmResourceProviderFactory.class)
@@ -29,7 +30,7 @@ public class AccountFormServiceFactory implements RealmResourceProviderFactory {
   }
 
   private ClientModel getAccountManagementClient(RealmModel realm) {
-    ClientModel client = realm.getClientByClientId("account-v1");
+    ClientModel client = realm.getClientByClientId(Constants.ACCOUNT_MANAGEMENT_CLIENT_ID);
     if (client == null || !client.isEnabled()) {
       log.debug("account management not enabled");
       throw new NotFoundException("account management not enabled");

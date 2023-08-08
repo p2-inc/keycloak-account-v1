@@ -13,14 +13,14 @@ import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.models.ProtocolMapperModel;
 import org.keycloak.models.RealmModel;
 import org.keycloak.provider.ProviderEvent;
-import org.keycloak.services.resource.RealmResourceProvider;
-import org.keycloak.services.resource.RealmResourceProviderFactory;
+import org.keycloak.services.resource.AccountResourceProvider;
+import org.keycloak.services.resource.AccountResourceProviderFactory;
 import jakarta.ws.rs.NotFoundException;
 import org.keycloak.models.Constants;
 
 @JBossLog
-@AutoService(RealmResourceProviderFactory.class)
-public class AccountFormServiceFactory implements RealmResourceProviderFactory {
+@AutoService(AccountResourceProviderFactory.class)
+public class AccountFormServiceFactory implements AccountResourceProviderFactory {
 
   public static final String ID = "account-v1";
 
@@ -39,7 +39,8 @@ public class AccountFormServiceFactory implements RealmResourceProviderFactory {
   }
 
   @Override
-  public RealmResourceProvider create(KeycloakSession session) {
+  public AccountResourceProvider create(KeycloakSession session) {
+    log.info("create");
     RealmModel realm = session.getContext().getRealm();
     ClientModel client = getAccountManagementClient(realm);
     EventBuilder event = new EventBuilder​(realm, session, session.getContext().getConnection());
@@ -47,11 +48,17 @@ public class AccountFormServiceFactory implements RealmResourceProviderFactory {
   }
 
   @Override
-  public void init(Scope config) {}
+  public void init(Scope config) {
+    log.info("init");
+  }
 
   @Override
-  public void postInit(KeycloakSessionFactory factory) {}
+  public void postInit(KeycloakSessionFactory factory) {
+    log.info("postInit");
+  }
 
   @Override
-  public void close() {}
+  public void close() {
+    log.info("close");
+  }
 }

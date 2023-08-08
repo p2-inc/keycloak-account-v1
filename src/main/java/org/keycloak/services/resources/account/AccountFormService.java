@@ -47,6 +47,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import com.google.common.base.Strings;
+
 import lombok.extern.jbosslog.JBossLog;
 import org.jboss.logging.Logger;
 import org.keycloak.authorization.AuthorizationProvider;
@@ -102,7 +105,7 @@ import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.services.managers.AuthenticationSessionManager;
 import org.keycloak.services.managers.UserConsentManager;
 import org.keycloak.services.messages.Messages;
-import org.keycloak.services.resource.RealmResourceProvider;
+import org.keycloak.services.resource.AccountResourceProvider;
 import org.keycloak.services.resources.AbstractSecuredLocalService;
 import org.keycloak.services.resources.RealmsResource;
 import org.keycloak.services.util.DefaultClientSessionContext;
@@ -110,6 +113,7 @@ import org.keycloak.services.util.ResolveRelative;
 import org.keycloak.services.validation.Validation;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.storage.ReadOnlyException;
+import org.keycloak.theme.Theme;
 import org.keycloak.userprofile.EventAuditingAttributeChangeListener;
 import org.keycloak.userprofile.UserProfile;
 import org.keycloak.userprofile.UserProfileContext;
@@ -123,7 +127,13 @@ import org.keycloak.utils.CredentialHelper;
  */
 @JBossLog
 public class AccountFormService extends AbstractSecuredLocalService
-    implements RealmResourceProvider {
+    implements AccountResourceProvider {
+
+  @Override
+  public boolean useWithTheme(Theme theme) {
+    log.infof("Attempt to use with theme %s", theme.getName());
+    return (!Strings.isNullOrEmpty(theme.getName()) && "account-v1".equals(theme.getName()));
+  }
 
   @Override
   public Object getResource() {
@@ -1236,12 +1246,7 @@ public class AccountFormService extends AbstractSecuredLocalService
 
   @Override
   protected URI getBaseRedirectUri() {
-    URI u =
-        AccountUrls.accountBaseBuilder(session.getContext().getUri().getBaseUri())
-            .path("/")
-            .build(realm.getName());
-    log.debugf("getBaseRedirectUri %s", u);
-    return u;
+    return AccountUrls.accountBase(session.getContext().getUri().getBaseUri()).path("/").build(realm.getName());
   }
 
   public static boolean isPasswordSet(KeycloakSession session, RealmModel realm, UserModel user) {

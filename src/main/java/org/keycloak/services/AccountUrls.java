@@ -7,6 +7,7 @@ import org.keycloak.OAuth2Constants;
 import org.keycloak.protocol.oidc.OIDCLoginProtocol;
 import org.keycloak.protocol.oidc.OIDCLoginProtocolService;
 import org.keycloak.services.resources.LoginActionsService;
+import org.keycloak.services.resources.RealmsResource;
 import org.keycloak.services.resources.account.AccountFormService;
 
 @JBossLog
@@ -16,10 +17,8 @@ public class AccountUrls extends Urls {
     return tokenBase(baseUri).path(OIDCLoginProtocolService.class, "logout");
   }
 
-  public static UriBuilder accountBaseBuilder(URI baseUri) {
-    // return realmBase(baseUri).path(AccountFormService.class, "accountPage");
-    // TODO make this dynamic based on the class or client id?
-    return realmBase(baseUri).path("{realm}/account-v1/");
+  public static UriBuilder accountBase(URI baseUri) {
+    return realmBase(baseUri).path(RealmsResource.class, "getAccountService");
   }
 
   private static UriBuilder tokenBase(URI baseUri) {
@@ -27,7 +26,7 @@ public class AccountUrls extends Urls {
   }
 
   public static URI accountApplicationsPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "applicationsPage")
         .build(realmName);
   }
@@ -37,37 +36,37 @@ public class AccountUrls extends Urls {
   }
 
   public static UriBuilder accountPageBuilder(URI baseUri) {
-    return accountBaseBuilder(baseUri).path(AccountFormService.class, "accountPage");
+    return accountBase(baseUri).path(AccountFormService.class, "accountPage");
   }
 
   public static URI accountPasswordPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "passwordPage")
         .build(realmName);
   }
 
   public static URI accountFederatedIdentityPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "federatedIdentityPage")
         .build(realmName);
   }
 
   public static URI accountFederatedIdentityUpdate(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "processFederatedIdentityUpdate")
         .build(realmName);
   }
 
   public static URI accountTotpPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri).path(AccountFormService.class, "totpPage").build(realmName);
+    return accountBase(baseUri).path(AccountFormService.class, "totpPage").build(realmName);
   }
 
   public static URI accountLogPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri).path(AccountFormService.class, "logPage").build(realmName);
+    return accountBase(baseUri).path(AccountFormService.class, "logPage").build(realmName);
   }
 
   public static URI accountSessionsPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "sessionsPage")
         .build(realmName);
   }
@@ -81,25 +80,25 @@ public class AccountUrls extends Urls {
   }
 
   public static URI accountResourcesPage(URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "resourcesPage")
         .build(realmName);
   }
 
   public static URI accountResourceDetailPage(String resourceId, URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "resourceDetailPage")
         .build(realmName, resourceId);
   }
 
   public static URI accountResourceGrant(String resourceId, URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "grantPermission")
         .build(realmName, resourceId);
   }
 
   public static URI accountResourceShare(String resourceId, URI baseUri, String realmName) {
-    return accountBaseBuilder(baseUri)
+    return accountBase(baseUri)
         .path(AccountFormService.class, "shareResource")
         .build(realmName, resourceId);
   }

@@ -16,6 +16,7 @@
  */
 package org.keycloak.services.resources.account;
 
+import com.google.common.base.Strings;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -47,9 +48,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.google.common.base.Strings;
-
 import lombok.extern.jbosslog.JBossLog;
 import org.jboss.logging.Logger;
 import org.keycloak.authorization.AuthorizationProvider;
@@ -129,10 +127,14 @@ import org.keycloak.utils.CredentialHelper;
 public class AccountFormService extends AbstractSecuredLocalService
     implements AccountResourceProvider {
 
+  public static final String THEME_NAME = "account-v1";
+
   @Override
   public boolean useWithTheme(Theme theme) {
     log.infof("Attempt to use with theme %s", theme.getName());
-    return (!Strings.isNullOrEmpty(theme.getName()) && "account-v1".equals(theme.getName()));
+    return ((!Strings.isNullOrEmpty(theme.getName()) && THEME_NAME.equals(theme.getName()))
+        || (!Strings.isNullOrEmpty(theme.getParentName())
+            && THEME_NAME.equals(theme.getParentName())));
   }
 
   @Override
@@ -1246,7 +1248,9 @@ public class AccountFormService extends AbstractSecuredLocalService
 
   @Override
   protected URI getBaseRedirectUri() {
-    return AccountUrls.accountBase(session.getContext().getUri().getBaseUri()).path("/").build(realm.getName());
+    return AccountUrls.accountBase(session.getContext().getUri().getBaseUri())
+        .path("/")
+        .build(realm.getName());
   }
 
   public static boolean isPasswordSet(KeycloakSession session, RealmModel realm, UserModel user) {

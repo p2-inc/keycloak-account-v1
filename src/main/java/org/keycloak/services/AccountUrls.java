@@ -26,9 +26,7 @@ public class AccountUrls extends Urls {
   }
 
   public static URI accountApplicationsPage(URI baseUri, String realmName) {
-    return accountBase(baseUri)
-        .path(AccountFormService.class, "applicationsPage")
-        .build(realmName);
+    return accountBase(baseUri).path(AccountFormService.class, "applicationsPage").build(realmName);
   }
 
   public static URI accountPage(URI baseUri, String realmName) {
@@ -40,9 +38,7 @@ public class AccountUrls extends Urls {
   }
 
   public static URI accountPasswordPage(URI baseUri, String realmName) {
-    return accountBase(baseUri)
-        .path(AccountFormService.class, "passwordPage")
-        .build(realmName);
+    return accountBase(baseUri).path(AccountFormService.class, "passwordPage").build(realmName);
   }
 
   public static URI accountFederatedIdentityPage(URI baseUri, String realmName) {
@@ -66,9 +62,7 @@ public class AccountUrls extends Urls {
   }
 
   public static URI accountSessionsPage(URI baseUri, String realmName) {
-    return accountBase(baseUri)
-        .path(AccountFormService.class, "sessionsPage")
-        .build(realmName);
+    return accountBase(baseUri).path(AccountFormService.class, "sessionsPage").build(realmName);
   }
 
   public static URI accountLogout(
@@ -80,9 +74,7 @@ public class AccountUrls extends Urls {
   }
 
   public static URI accountResourcesPage(URI baseUri, String realmName) {
-    return accountBase(baseUri)
-        .path(AccountFormService.class, "resourcesPage")
-        .build(realmName);
+    return accountBase(baseUri).path(AccountFormService.class, "resourcesPage").build(realmName);
   }
 
   public static URI accountResourceDetailPage(String resourceId, URI baseUri, String realmName) {

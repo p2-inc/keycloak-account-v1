@@ -16,7 +16,6 @@
  */
 package org.keycloak.services.resources.account;
 
-import com.google.common.base.Strings;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -111,7 +110,6 @@ import org.keycloak.services.util.ResolveRelative;
 import org.keycloak.services.validation.Validation;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.storage.ReadOnlyException;
-import org.keycloak.theme.Theme;
 import org.keycloak.userprofile.EventAuditingAttributeChangeListener;
 import org.keycloak.userprofile.UserProfile;
 import org.keycloak.userprofile.UserProfileContext;

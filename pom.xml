@@ -22,10 +22,10 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.java.package>io.phasetwo.keycloak.account.v1</main.java.package>
-    <keycloak.version>999.0.0-SNAPSHOT</keycloak.version>
+    <keycloak.version>23.0.0</keycloak.version>
     <guava.version>32.0.0-jre</guava.version>
     <commons-lang3.version>3.11</commons-lang3.version>
-    <lombok.version>1.18.28</lombok.version>
+    <lombok.version>1.18.30</lombok.version>
     <auto-service.version>1.1.1</auto-service.version>
     <ossrh.url>https://s01.oss.sonatype.org</ossrh.url>
   </properties>
@@ -65,19 +65,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
 	<version>3.2.0</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Dependencies>
-              <![CDATA[org.keycloak.keycloak-common,org.keycloak.keycloak-core,org.keycloak.keycloak-server-spi,org.keycloak.keycloak-server-spi-private,org.keycloak.keycloak-services,com.google.guava]]></Dependencies>
-            </manifestEntries>
-          </archive>
-        </configuration>
       </plugin>
       <plugin> <!-- pretty up the code using google java standards `mvn fmt:format` -->
         <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
-        <version>2.20</version>
+        <version>2.21.1</version>
       </plugin>
     </plugins>
   </build>

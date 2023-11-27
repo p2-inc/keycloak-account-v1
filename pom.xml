@@ -37,6 +37,7 @@
   </scm>
 
   <build>
+    <finalName>keycloak-account-v1</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

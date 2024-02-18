@@ -25,3 +25,18 @@ docker compose up
 2. Create a user
 3. Set the account theme to `account-v1`
 4. Go to http://localhost:8180/realms/test/account/
+
+## Updating Your Account Theme for Keycloak Version 23 and Beyond  
+
+[Account console v1](https://www.keycloak.org/docs/latest/release_notes/index.html#account-console-v1-removal) have been removed from Keycloak in version 22.  
+If you have a custom theme based on Account console v1 you can make it work with Keycloak 23 and up by follow these steps:  
+
+1. Download and load [this jar file](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/account-v1.jar) into your Keycloak instance.  
+If you are unsure how to load a JAR extension into Keycloak, refer to [this guide](https://docs.keycloakify.dev/importing-your-theme-in-keycloak#bare-metal) for assistance.  
+
+2. Modify your theme's properties file located at `src/main/resources/theme/<your theme>/account/theme.properties` as follows:  
+
+```diff
+- parent=keycloak
++ parent=account-v1
+```  

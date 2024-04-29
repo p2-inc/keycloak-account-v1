@@ -956,7 +956,7 @@ public class AccountFormService extends AbstractSecuredLocalService
     AuthorizationProvider authorization = session.getProvider(AuthorizationProvider.class);
     PermissionTicketStore ticketStore = authorization.getStoreFactory().getPermissionTicketStore();
     Resource resource =
-        authorization.getStoreFactory().getResourceStore().findById(realm, null, resourceId);
+        authorization.getStoreFactory().getResourceStore().findById(null, resourceId);
 
     if (resource == null) {
       throw ErrorResponse.error("Invalid resource", Response.Status.BAD_REQUEST);
@@ -984,7 +984,7 @@ public class AccountFormService extends AbstractSecuredLocalService
         String id = iterator.next();
 
         if (!id.contains(":")) {
-          policy = policyStore.findById(realm, resourceServer, id);
+          policy = policyStore.findById(resourceServer, id);
           iterator.remove();
           break;
         }
@@ -1002,7 +1002,7 @@ public class AccountFormService extends AbstractSecuredLocalService
               authorization
                   .getStoreFactory()
                   .getScopeStore()
-                  .findById(realm, resourceServer, id.split(":")[1]));
+                  .findById(resourceServer, id.split(":")[1]));
         }
 
         for (Scope scope : policy.getScopes()) {
@@ -1014,10 +1014,10 @@ public class AccountFormService extends AbstractSecuredLocalService
 
       if (policy.getScopes().isEmpty()) {
         for (Policy associated : policy.getAssociatedPolicies()) {
-          policyStore.delete(realm, associated.getId());
+          policyStore.delete(associated.getId());
         }
 
-        policyStore.delete(realm, policy.getId());
+        policyStore.delete(policy.getId());
       }
     } else {
       Map<PermissionTicket.FilterOption, String> filters =
@@ -1035,7 +1035,7 @@ public class AccountFormService extends AbstractSecuredLocalService
       }
 
       List<PermissionTicket> tickets =
-          ticketStore.find(realm, resource.getResourceServer(), filters, null, null);
+          ticketStore.find(resource.getResourceServer(), filters, null, null);
       Iterator<PermissionTicket> iterator = tickets.iterator();
 
       while (iterator.hasNext()) {
@@ -1062,7 +1062,7 @@ public class AccountFormService extends AbstractSecuredLocalService
       }
 
       for (PermissionTicket ticket : tickets) {
-        ticketStore.delete(client.getRealm(), ticket.getId());
+        ticketStore.delete(ticket.getId());
       }
     }
 
@@ -1099,7 +1099,7 @@ public class AccountFormService extends AbstractSecuredLocalService
     PermissionTicketStore ticketStore = authorization.getStoreFactory().getPermissionTicketStore();
     ScopeStore scopeStore = authorization.getStoreFactory().getScopeStore();
     Resource resource =
-        authorization.getStoreFactory().getResourceStore().findById(realm, null, resourceId);
+        authorization.getStoreFactory().getResourceStore().findById(null, resourceId);
     ResourceServer resourceServer = resource.getResourceServer();
 
     if (resource == null) {
@@ -1138,13 +1138,13 @@ public class AccountFormService extends AbstractSecuredLocalService
       filters.put(PermissionTicket.FilterOption.OWNER, auth.getUser().getId());
       filters.put(PermissionTicket.FilterOption.REQUESTER, user.getId());
 
-      List<PermissionTicket> tickets = ticketStore.find(realm, resourceServer, filters, null, null);
+      List<PermissionTicket> tickets = ticketStore.find(resourceServer, filters, null, null);
       final String userId = user.getId();
 
       if (tickets.isEmpty()) {
         if (scopes != null && scopes.length > 0) {
           for (String scopeId : scopes) {
-            Scope scope = scopeStore.findById(realm, resourceServer, scopeId);
+            Scope scope = scopeStore.findById(resourceServer, scopeId);
             PermissionTicket ticket = ticketStore.create(resourceServer, resource, scope, userId);
             ticket.setGrantedTimestamp(System.currentTimeMillis());
           }
@@ -1170,7 +1170,7 @@ public class AccountFormService extends AbstractSecuredLocalService
         grantScopes.removeIf(alreadyGrantedScopes::contains);
 
         for (String scopeId : grantScopes) {
-          Scope scope = scopeStore.findById(realm, resourceServer, scopeId);
+          Scope scope = scopeStore.findById(resourceServer, scopeId);
           PermissionTicket ticket = ticketStore.create(resourceServer, resource, scope, userId);
           ticket.setGrantedTimestamp(System.currentTimeMillis());
         }
@@ -1202,7 +1202,7 @@ public class AccountFormService extends AbstractSecuredLocalService
 
     for (String resourceId : resourceIds) {
       Resource resource =
-          authorization.getStoreFactory().getResourceStore().findById(realm, null, resourceId);
+          authorization.getStoreFactory().getResourceStore().findById(null, resourceId);
 
       if (resource == null) {
         throw ErrorResponse.error("Invalid resource", Response.Status.BAD_REQUEST);
@@ -1220,10 +1220,9 @@ public class AccountFormService extends AbstractSecuredLocalService
         filters.put(PermissionTicket.FilterOption.GRANTED, Boolean.FALSE.toString());
       }
 
-      RealmModel realm = resource.getResourceServer().getRealm();
       for (PermissionTicket ticket :
-          ticketStore.find(realm, resource.getResourceServer(), filters, null, null)) {
-        ticketStore.delete(realm, ticket.getId());
+          ticketStore.find(resource.getResourceServer(), filters, null, null)) {
+        ticketStore.delete(ticket.getId());
       }
     }
 

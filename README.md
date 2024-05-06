@@ -6,12 +6,24 @@ Changes to Keycloak that make this possible
 - Issue: https://github.com/keycloak/keycloak/issues/22318
 - PR: https://github.com/keycloak/keycloak/pull/22317
 
+## Keycloak Versions
+
+This module depends on Keycloak internals that may change without notice. Therefore, you must use different versions of this module based on the version of Keycloak you are using.
+
+| Keycloak Version Range  | This Module Version |
+|-------------------------|--------------------------------------------|
+| Any version prior to 22 | You do not need this module |
+| ~22.0.0                 | No solution for this Keycloak version |
+| ~23.0.0                 | v0.3 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.3-SNAPSHOT.jar) |
+| 24.0.0 to ?             | v0.4 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.4.jar) |
+
+
 ## Updating Your Account Theme for Keycloak Version 23 and Beyond  
 
 [Account console v1](https://www.keycloak.org/docs/latest/release_notes/index.html#account-console-v1-removal) have been removed from Keycloak in version 22.  
 If you have a custom theme based on Account console v1 you can make it work with Keycloak 23 and up by follow these steps:  
 
-1. Download and load [this jar file](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.3-SNAPSHOT.jar) into your Keycloak instance.  
+1. Download and load the correct .jar of this module depending of your Keycloak version (see above).  
 If you are unsure how to load a JAR extension into Keycloak, refer to [this guide](https://docs.keycloakify.dev/importing-your-theme-in-keycloak#bare-metal) for assistance.  
 
 2. Modify your `theme.properties` as follows:  

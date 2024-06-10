@@ -15,7 +15,8 @@ This module depends on Keycloak internals that may change without notice. Theref
 | Any version prior to 22 | You do not need this module |
 | ~22.0.0                 | No solution for this Keycloak version |
 | ~23.0.0                 | v0.3 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.3-SNAPSHOT.jar) |
-| 24.0.0 to ?             | v0.4 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.4.jar) |
+| 24.0.0             | v0.4 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.4.jar) |
+| 25.0.0 to ?             | v0.6 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.6.jar) |
 
 
 ## Updating Your Account Theme for Keycloak Version 23 and Beyond  
@@ -95,6 +96,7 @@ mvn clean install
 docker compose up
 ```
 
+0. Connect to http://localhost:8180/ and login as `admin`/`admin`
 1. Create realm `test`
 2. Create a user
 3. Set the account theme to `account-v1`

@@ -2,9 +2,9 @@ version: '3'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:24.0.2
+    image: quay.io/keycloak/keycloak:25.0.0
     volumes:
-      - ${PWD}/target/keycloak-account-v1-0.4-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-account-v1.jar
+      - ${PWD}/target/keycloak-account-v1-0.6-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-account-v1.jar
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin

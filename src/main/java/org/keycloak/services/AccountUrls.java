@@ -106,7 +106,7 @@ public class AccountUrls extends Urls {
   }
 
   public static URI loginActionEmailVerification(URI baseUri, String realmName) {
-    return loginActionEmailVerificationBuilder(baseUri).build(realmName);
+    return loginActionsBase(baseUri).path(LoginActionsService.class, "emailVerification").build(realmName);
   }
 
   public static String localeCookiePath(URI baseUri, String realmName) {

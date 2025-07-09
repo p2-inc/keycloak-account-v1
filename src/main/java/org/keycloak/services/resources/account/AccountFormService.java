@@ -63,6 +63,8 @@ import org.keycloak.common.Profile;
 import org.keycloak.common.util.Base64Url;
 import org.keycloak.common.util.Time;
 import org.keycloak.common.util.UriUtils;
+import org.keycloak.credential.CredentialProvider;
+import org.keycloak.credential.OTPCredentialProviderFactory;
 import org.keycloak.events.Details;
 import org.keycloak.events.Errors;
 import org.keycloak.events.Event;
@@ -635,7 +637,7 @@ public class AccountFormService extends AbstractSecuredLocalService
             .setError(Status.OK, Messages.UNEXPECTED_ERROR_HANDLING_REQUEST)
             .createResponse(AccountPages.TOTP);
       }
-      CredentialHelper.deleteOTPCredential(session, realm, user, credentialId);
+      this.deleteOtpCredential(session, realm, user, credentialId);
       event.event(EventType.REMOVE_TOTP).client(auth.getClient()).user(auth.getUser()).success();
       setReferrerOnPage();
       return account.setSuccess(Messages.SUCCESS_TOTP_REMOVED).createResponse(AccountPages.TOTP);
@@ -666,6 +668,11 @@ public class AccountFormService extends AbstractSecuredLocalService
       setReferrerOnPage();
       return account.setSuccess(Messages.SUCCESS_TOTP).createResponse(AccountPages.TOTP);
     }
+  }
+
+  private void deleteOtpCredential(KeycloakSession session, RealmModel realm, UserModel user, String credentialId) {
+    CredentialProvider otpCredentialProvider = session.getProvider(CredentialProvider.class, OTPCredentialProviderFactory.PROVIDER_ID);
+    otpCredentialProvider.deleteCredential(realm, user, credentialId);
   }
 
   /**

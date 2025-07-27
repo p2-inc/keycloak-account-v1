@@ -635,7 +635,7 @@ public class AccountFormService extends AbstractSecuredLocalService
             .setError(Status.OK, Messages.UNEXPECTED_ERROR_HANDLING_REQUEST)
             .createResponse(AccountPages.TOTP);
       }
-      CredentialHelper.deleteOTPCredential(session, realm, user, credentialId);
+      user.credentialManager().removeStoredCredentialById(credentialId);
       event.event(EventType.REMOVE_TOTP).client(auth.getClient()).user(auth.getUser()).success();
       setReferrerOnPage();
       return account.setSuccess(Messages.SUCCESS_TOTP_REMOVED).createResponse(AccountPages.TOTP);

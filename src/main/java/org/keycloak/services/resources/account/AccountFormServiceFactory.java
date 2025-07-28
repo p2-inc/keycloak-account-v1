@@ -1,22 +1,17 @@
 package org.keycloak.services.resources.account;
 
 import com.google.auto.service.AutoService;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import java.util.Map;
+import jakarta.ws.rs.NotFoundException;
 import lombok.extern.jbosslog.JBossLog;
 import org.keycloak.Config.Scope;
 import org.keycloak.events.EventBuilder;
 import org.keycloak.models.ClientModel;
+import org.keycloak.models.Constants;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
-import org.keycloak.models.ProtocolMapperModel;
 import org.keycloak.models.RealmModel;
-import org.keycloak.provider.ProviderEvent;
 import org.keycloak.services.resource.AccountResourceProvider;
 import org.keycloak.services.resource.AccountResourceProviderFactory;
-import jakarta.ws.rs.NotFoundException;
-import org.keycloak.models.Constants;
 
 @JBossLog
 @AutoService(AccountResourceProviderFactory.class)
@@ -43,7 +38,7 @@ public class AccountFormServiceFactory implements AccountResourceProviderFactory
     log.info("create");
     RealmModel realm = session.getContext().getRealm();
     ClientModel client = getAccountManagementClient(realm);
-    EventBuilder event = new EventBuilder​(realm, session, session.getContext().getConnection());
+    EventBuilder event = new EventBuilder(realm, session, session.getContext().getConnection());
     return new AccountFormService(session, client, event);
   }
 

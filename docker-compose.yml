@@ -2,12 +2,14 @@ version: '3'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:25.0.0
+    image: quay.io/keycloak/keycloak:26.3.2
     volumes:
-      - ${PWD}/target/keycloak-account-v1-0.6-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-account-v1.jar
+      - ${PWD}/target/keycloak-account-v1-0.7-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-account-v1.jar
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,address=*:8787,server=y,suspend=n -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     ports:
       - 8180:8180
+      - 8787:8787
     entrypoint: /opt/keycloak/bin/kc.sh start-dev --http-port=8180

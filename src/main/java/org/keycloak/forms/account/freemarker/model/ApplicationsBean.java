@@ -25,19 +25,13 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.keycloak.common.util.MultivaluedHashMap;
-import org.keycloak.models.ClientModel;
-import org.keycloak.models.ClientScopeModel;
-import org.keycloak.models.Constants;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.OrderedModel;
-import org.keycloak.models.RealmModel;
-import org.keycloak.models.RoleModel;
-import org.keycloak.models.UserConsentModel;
-import org.keycloak.models.UserModel;
+import org.keycloak.models.*;
 import org.keycloak.protocol.oidc.TokenManager;
+import org.keycloak.services.managers.RealmManager;
 import org.keycloak.services.managers.UserSessionManager;
-import org.keycloak.services.resources.admin.permissions.AdminPermissions;
+import org.keycloak.services.resources.admin.AdminAuth;
 import org.keycloak.services.util.ResolveRelative;
 import org.keycloak.storage.StorageId;
 
@@ -52,12 +46,13 @@ public class ApplicationsBean {
     Set<ClientModel> offlineClients =
         new UserSessionManager(session).findClientsWithOfflineToken(realm, user);
 
+
     this.applications =
         this.getApplications(session, realm, user)
             .filter(
                 client ->
                     !isAdminClient(client)
-                        || AdminPermissions.realms(session, realm, user).isAdmin())
+                        || isAdmin(realm, user, client))
             .map(client -> toApplicationEntry(session, realm, user, client, offlineClients))
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
@@ -254,5 +249,27 @@ public class ApplicationsBean {
         client,
         clientScopesGranted,
         additionalGrants);
+  }
+
+
+    /**
+     * Recreation for logic in method AdminPermissions.realms(session, realm, user).isAdmin() which
+     * is deprecated in KC 26.0
+     *
+     * @param realm
+     * @param user
+     * @param client
+     * @return
+     */
+  private boolean isAdmin(final RealmModel realm,
+                          final UserModel user,
+                          final ClientModel client) {
+    AdminAuth auth = new AdminAuth(realm, null, user, client);
+    if (RealmManager.isAdministrationRealm(auth.getRealm())) {
+      if (auth.hasRealmRole(AdminRoles.ADMIN) || auth.hasRealmRole(AdminRoles.CREATE_REALM)) {
+        return true;
+      }
+    }
+    return auth.hasOneOfRealmRole(AdminRoles.ALL_REALM_ROLES);
   }
 }

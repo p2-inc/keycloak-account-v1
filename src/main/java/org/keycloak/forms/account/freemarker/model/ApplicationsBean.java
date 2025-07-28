@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.models.*;
 import org.keycloak.protocol.oidc.TokenManager;
@@ -46,13 +45,9 @@ public class ApplicationsBean {
     Set<ClientModel> offlineClients =
         new UserSessionManager(session).findClientsWithOfflineToken(realm, user);
 
-
     this.applications =
         this.getApplications(session, realm, user)
-            .filter(
-                client ->
-                    !isAdminClient(client)
-                        || isAdmin(realm, user, client))
+            .filter(client -> !isAdminClient(client) || isAdmin(realm, user, client))
             .map(client -> toApplicationEntry(session, realm, user, client, offlineClients))
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
@@ -251,19 +246,16 @@ public class ApplicationsBean {
         additionalGrants);
   }
 
-
-    /**
-     * Recreation for logic in method AdminPermissions.realms(session, realm, user).isAdmin() which
-     * is deprecated in KC 26.0
-     *
-     * @param realm
-     * @param user
-     * @param client
-     * @return
-     */
-  private boolean isAdmin(final RealmModel realm,
-                          final UserModel user,
-                          final ClientModel client) {
+  /**
+   * Recreation for logic in method AdminPermissions.realms(session, realm, user).isAdmin() which is
+   * deprecated in KC 26.0
+   *
+   * @param realm
+   * @param user
+   * @param client
+   * @return
+   */
+  private boolean isAdmin(final RealmModel realm, final UserModel user, final ClientModel client) {
     AdminAuth auth = new AdminAuth(realm, null, user, client);
     if (RealmManager.isAdministrationRealm(auth.getRealm())) {
       if (auth.hasRealmRole(AdminRoles.ADMIN) || auth.hasRealmRole(AdminRoles.CREATE_REALM)) {

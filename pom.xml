@@ -25,9 +25,9 @@
     <keycloak.version>26.3.2</keycloak.version>
     <guava.version>32.0.0-jre</guava.version>
     <commons-lang3.version>3.11</commons-lang3.version>
-    <lombok.version>1.18.30</lombok.version>
+    <lombok.version>1.18.38</lombok.version>
     <auto-service.version>1.1.1</auto-service.version>
-    <ossrh.url>https://s01.oss.sonatype.org</ossrh.url>
+    <ossrh.url>https://ossrh-staging-api.central.sonatype.com</ossrh.url>
   </properties>
 
   <scm>
@@ -69,7 +69,7 @@
       <plugin> <!-- pretty up the code using google java standards `mvn fmt:format` -->
         <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
-        <version>2.21.1</version>
+        <version>2.25</version>
       </plugin>
     </plugins>
   </build>

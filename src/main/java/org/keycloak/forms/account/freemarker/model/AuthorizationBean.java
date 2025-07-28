@@ -71,10 +71,7 @@ public class AuthorizationBean {
 
     if (pathParameters != null && !pathParameters.isEmpty()) {
       Resource resource =
-          authorization
-              .getStoreFactory()
-              .getResourceStore()
-              .findById(null, pathParameters.get(0));
+          authorization.getStoreFactory().getResourceStore().findById(null, pathParameters.get(0));
 
       if (resource != null && !resource.getOwner().equals(user.getId())) {
         throw new RuntimeException(
@@ -137,8 +134,7 @@ public class AuthorizationBean {
       PermissionTicketStore ticketStore =
           authorization.getStoreFactory().getPermissionTicketStore();
 
-      userSharedResources =
-          toResourceRepresentation(ticketStore.find(null, filters, null, null));
+      userSharedResources = toResourceRepresentation(ticketStore.find(null, filters, null, null));
     }
     return userSharedResources;
   }
@@ -156,8 +152,7 @@ public class AuthorizationBean {
   }
 
   private ResourceBean getResource(String id) {
-    return new ResourceBean(
-        authorization.getStoreFactory().getResourceStore().findById(null, id));
+    return new ResourceBean(authorization.getStoreFactory().getResourceStore().findById(null, id));
   }
 
   public static class RequesterBean {

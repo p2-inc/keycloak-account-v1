@@ -4,7 +4,8 @@
   <artifactId>keycloak-account-v1</artifactId>
   <packaging>jar</packaging>
   <version>0.8-SNAPSHOT</version>
-
+  <name>Keycloak v1 Account theme for backwards compatibility</name>
+  
   <parent>
     <groupId>com.github.xgp</groupId>
     <artifactId>oss-parent</artifactId>

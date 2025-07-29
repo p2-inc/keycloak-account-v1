@@ -3,7 +3,8 @@
   <groupId>io.phasetwo.keycloak</groupId>
   <artifactId>keycloak-account-v1</artifactId>
   <packaging>jar</packaging>
-  <version>0.9-SNAPSHOT</version>
+  <version>0.7-SNAPSHOT</version>
+  <name>Keycloak v1 Account theme for backwards compatibility</name>
 
   <parent>
     <groupId>com.github.xgp</groupId>

@@ -13,10 +13,11 @@ This module depends on Keycloak internals that may change without notice. Theref
 | Keycloak Version Range  | This Module Version |
 |-------------------------|--------------------------------------------|
 | Any version prior to 22 | You do not need this module |
-| ~22.0.0                 | No solution for this Keycloak version |
-| ~23.0.0                 | v0.3 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.3-SNAPSHOT.jar) |
-| 24.0.0             | v0.4 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.4.jar) |
-| 25.0.0 to ?             | v0.6 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.6.jar) |
+| ^22.0.0                 | No solution for this Keycloak version |
+| ^23.0.0                 | v0.3 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.3-SNAPSHOT.jar) |
+| ^24.0.0                 | v0.4 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.4.jar) |
+| 25.0.0 to ~26.1.5       | v0.6 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.6.jar) |
+| 26.2.0 to ?             | v0.7 - [.jar download link](https://github.com/keycloakify/keycloakify/releases/download/v0.0.1/keycloak-account-v1-0.7.jar) |
 
 
 ## Updating Your Account Theme for Keycloak Version 23 and Beyond  

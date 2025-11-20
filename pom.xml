@@ -3,7 +3,7 @@
   <groupId>io.phasetwo.keycloak</groupId>
   <artifactId>keycloak-account-v1</artifactId>
   <packaging>jar</packaging>
-  <version>0.9-SNAPSHOT</version>
+  <version>0.9</version>
   <name>Keycloak v1 Account theme for backwards compatibility</name>
 
   <parent>
@@ -42,7 +42,7 @@
   <scm>
     <url>https://github.com/p2-inc/keycloak-account-v1</url>
     <connection>scm:git:git@github.com:p2-inc/keycloak-account-v1.git</connection>
-    <tag>HEAD</tag>
+    <tag>v0.9</tag>
   </scm>
 
   <build>

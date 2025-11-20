@@ -236,7 +236,7 @@ public class AccountFormService extends AbstractSecuredLocalService
         realm.isIdentityFederationEnabled(),
         eventStore != null && realm.isEventsEnabled(),
         true,
-        deleteAccountAllowed(auth.getUser()),
+        deleteAccountAllowed(auth),
         Profile.isFeatureEnabled(Profile.Feature.AUTHORIZATION));
   }
 
@@ -324,10 +324,10 @@ public class AccountFormService extends AbstractSecuredLocalService
     }
   }
 
-  private boolean deleteAccountAllowed(UserModel user) {
-      if (user != null) {
+  private boolean deleteAccountAllowed(Auth auth) {
+      if (auth != null && auth.getUser() != null) {
           RoleModel deleteAccountRole = realm.getClientByClientId(org.keycloak.models.Constants.ACCOUNT_MANAGEMENT_CLIENT_ID).getRole(AccountRoles.DELETE_ACCOUNT);
-          return deleteAccountRole != null && user.hasRole(deleteAccountRole) && realm.getRequiredActionProviderByAlias(DeleteAccount.PROVIDER_ID).isEnabled();
+          return deleteAccountRole != null && auth.getUser().hasRole(deleteAccountRole) && realm.getRequiredActionProviderByAlias(DeleteAccount.PROVIDER_ID).isEnabled();
       }
       return false;
   }

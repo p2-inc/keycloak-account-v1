@@ -70,6 +70,7 @@ public interface AccountProvider extends Provider {
       boolean social,
       boolean events,
       boolean passwordUpdateSupported,
+      boolean deleteAccountAllowed,
       boolean authorizationSupported);
 
   AccountProvider setAttribute(String key, String value);

@@ -50,6 +50,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.jbosslog.JBossLog;
 import org.jboss.logging.Logger;
+import org.keycloak.authentication.requiredactions.DeleteAccount;
 import org.keycloak.authorization.AuthorizationProvider;
 import org.keycloak.authorization.model.PermissionTicket;
 import org.keycloak.authorization.model.Policy;
@@ -234,6 +235,7 @@ public class AccountFormService extends AbstractSecuredLocalService
         realm.isIdentityFederationEnabled(),
         eventStore != null && realm.isEventsEnabled(),
         true,
+        deleteAccountAllowed(auth.getUser()),
         Profile.isFeatureEnabled(Profile.Feature.AUTHORIZATION));
   }
 
@@ -319,6 +321,14 @@ public class AccountFormService extends AbstractSecuredLocalService
     if (referrer != null) {
       account.setReferrer(referrer);
     }
+  }
+
+  private boolean deleteAccountAllowed(UserModel user) {
+      if (user != null) {
+          RoleModel deleteAccountRole = realm.getClientByClientId(org.keycloak.models.Constants.ACCOUNT_MANAGEMENT_CLIENT_ID).getRole(AccountRoles.DELETE_ACCOUNT);
+          return deleteAccountRole != null && user.hasRole(deleteAccountRole) && realm.getRequiredActionProviderByAlias(DeleteAccount.PROVIDER_ID).isEnabled();
+      }
+      return false;
   }
 
   /**

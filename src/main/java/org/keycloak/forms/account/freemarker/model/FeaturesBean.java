@@ -25,16 +25,19 @@ public class FeaturesBean {
   private final boolean identityFederation;
   private final boolean log;
   private final boolean passwordUpdateSupported;
+  private final boolean deleteAccountAllowed;
   private boolean authorization;
 
   public FeaturesBean(
       boolean identityFederation,
       boolean log,
       boolean passwordUpdateSupported,
+      boolean deleteAccountAllowed,
       boolean authorization) {
     this.identityFederation = identityFederation;
     this.log = log;
     this.passwordUpdateSupported = passwordUpdateSupported;
+    this.deleteAccountAllowed = deleteAccountAllowed;
     this.authorization = authorization;
   }
 
@@ -48,6 +51,10 @@ public class FeaturesBean {
 
   public boolean isPasswordUpdateSupported() {
     return passwordUpdateSupported;
+  }
+
+  public boolean isDeleteAccountAllowed() {
+    return deleteAccountAllowed;
   }
 
   public boolean isAuthorization() {

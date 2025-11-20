@@ -85,6 +85,7 @@ public class FreeMarkerAccountProvider implements AccountProvider {
   protected boolean eventsEnabled;
   protected boolean passwordUpdateSupported;
   protected boolean passwordSet;
+  protected boolean deleteAccountAllowed;
   protected KeycloakSession session;
   protected FreeMarkerProvider freeMarker;
   protected HttpHeaders headers;
@@ -167,6 +168,7 @@ public class FreeMarkerAccountProvider implements AccountProvider {
             identityProviderEnabled,
             eventsEnabled,
             passwordUpdateSupported,
+            deleteAccountAllowed,
             authorizationSupported));
     attributes.put("account", new AccountBean(user, profileFormData));
 
@@ -402,10 +404,12 @@ public class FreeMarkerAccountProvider implements AccountProvider {
       boolean identityProviderEnabled,
       boolean eventsEnabled,
       boolean passwordUpdateSupported,
+      boolean deleteAccountAllowed,
       boolean authorizationSupported) {
     this.identityProviderEnabled = identityProviderEnabled;
     this.eventsEnabled = eventsEnabled;
     this.passwordUpdateSupported = passwordUpdateSupported;
+    this.deleteAccountAllowed = deleteAccountAllowed;
     this.authorizationSupported = authorizationSupported;
     return this;
   }

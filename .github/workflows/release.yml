@@ -32,7 +32,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           gpg-enabled: true
-          gpg-key-id: BC6B4EADEB514AFD
+          gpg-key-id: BCC3366174BD7EF1
           gpg-key: ${{ secrets.GPG_KEY }}
 
           docker-registry-id: ossrh
